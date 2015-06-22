@@ -18,6 +18,11 @@
 # under the License.
 #
 -->
+# Fork Overview
+
+This fork uses the android.support.v7 library, and extends AppCompatActivity instead of regular
+Activity so we can use the latest Material design components.
+
 # Cordova Android
 
 Cordova Android is an Android application library that allows for Cordova-based

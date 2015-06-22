@@ -18,8 +18,8 @@
 */
 package org.apache.cordova;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 
 import org.apache.cordova.CordovaPlugin;
 
@@ -53,7 +53,7 @@ public interface CordovaInterface {
      *
      * @return the Activity
      */
-    public abstract Activity getActivity();
+    public abstract AppCompatActivity getActivity();
     
 
     /**

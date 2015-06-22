@@ -20,6 +20,7 @@
 package org.apache.cordova;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,7 @@ import java.util.concurrent.Executors;
  */
 public class CordovaInterfaceImpl implements CordovaInterface {
     private static final String TAG = "CordovaInterfaceImpl";
-    protected Activity activity;
+    protected AppCompatActivity activity;
     protected ExecutorService threadPool;
     protected PluginManager pluginManager;
 
@@ -41,11 +42,11 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     protected String initCallbackService;
     protected int activityResultRequestCode;
 
-    public CordovaInterfaceImpl(Activity activity) {
+    public CordovaInterfaceImpl(AppCompatActivity activity) {
         this(activity, Executors.newCachedThreadPool());
     }
 
-    public CordovaInterfaceImpl(Activity activity, ExecutorService threadPool) {
+    public CordovaInterfaceImpl(AppCompatActivity activity, ExecutorService threadPool) {
         this.activity = activity;
         this.threadPool = threadPool;
     }
@@ -71,7 +72,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     }
 
     @Override
-    public Activity getActivity() {
+    public AppCompatActivity getActivity() {
         return activity;
     }
 

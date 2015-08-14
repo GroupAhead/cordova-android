@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -236,7 +237,10 @@ public class CordovaActivity extends AppCompatActivity {
         LOG.d(TAG, "Paused the activity.");
 
         if (this.appView != null) {
-            this.appView.handlePause(this.keepRunning);
+            // CB-9382 If there is an activity that started for result and main activity is waiting for callback
+            // result, we shoudn't stop WebView Javascript timers, as activity for result might be using them
+            boolean keepRunning = this.keepRunning || this.cordovaInterface.activityResultCallback != null;
+            this.appView.handlePause(keepRunning);
         }
     }
 
@@ -328,6 +332,7 @@ public class CordovaActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         // Capture requestCode here so that it is captured in the setActivityResultCallback() case.

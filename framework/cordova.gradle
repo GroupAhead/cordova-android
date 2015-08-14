@@ -20,6 +20,10 @@
 import java.util.regex.Pattern
 import groovy.swing.SwingBuilder
 
+dependencies {
+    compile 'com.android.support:appcompat-v7:22.1.1'
+}
+
 String doEnsureValueExists(filePath, props, key) {
     if (props.get(key) == null) {
         throw new GradleException(filePath + ': Missing key required "' + key + '"')

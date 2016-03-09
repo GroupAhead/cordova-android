@@ -19,7 +19,65 @@
 #
 -->
 ## Release Notes for Cordova (Android) ##
-Update these notes using: git log --pretty=format:'* %s' --topo-order --no-merges *remote*/4.1.x...HEAD
+
+### 5.1.1 (Feb 24, 2016)
+* updated `cordova-common` dependnecy to `1.1.0`
+* CB-10628 Fix `emulate android --target`
+* CB-10618 Handle gradle frameworks on plugin installation/uninstallation
+* CB-10510: Add an optional timeout to `emu` start script
+* CB-10498: Resume event should be sticky if it has a plugin result
+* fix `HtmlNotFoundTest` so that it passes when file not found is handled correctly
+* CB-10472 `NullPointerException`: `org.apache.cordova.PluginManager.onSaveInstanceState` check if `pluginManager` is `null` before using it
+* CB-10138 Adds missing plugin metadata to `plugin_list` module.
+* CB-10443 Pass original options instead of remaining
+* CB-10443 Fix `this.root` null reference
+* CB-10421 Fixes exception when calling run script with `--help` option
+* updated `.gitignore`
+* CB-10406 Fixes an exception, thrown when building using Ant. 
+* CB-10157 Uninstall app from device/emulator only when signed apk is already installed
+
+### 5.1.0 (Jan 19, 2016)
+* CB-10386 Add `android.useDeprecatedNdk=true` to support `NDK` in `gradle`
+* CB-8864: Fixing this to mitigate CB-8685 and CB-10104
+* CB-10105: Spot fix for tilde errors on paths.
+* Update theme to `Theme.DeviceDefault.NoActionBar`
+* CB-10014: Set gradle `applicationId` to `package name`.
+* CB-9949: Fixing menu button event not fired in **Android**
+* CB-9479: Fixing the conditionals again, we should 
+* CB-8917: New Plugin API for passing results on resume after Activity destruction
+* CB-9971 Suppress `gradlew _JAVA_OPTIONS` output during build
+* CB-9836 Add `.gitattributes` to prevent `CRLF` line endings in repos
+* added node_modules back into `.gitignore`
+
+### 5.0.0 (Nov 01, 2015)
+* Update CordovaWebViewEngine.java
+* CB-9909 Shouldn't escape spaces in paths on Windows.
+* CB-9870 updated hello world template
+* CB-9880 Fixes platform update failure when upgrading from android@<4.1.0
+* CB-9844 Remove old .java after renaming activity
+* CB-9800 Fixing contribute link.
+* CB-9782 Check in `cordova-common` dependency
+* Adds licence header to Adb to pass rat audit
+* CB-9835 Downgrade `properties-parser` to prevent failures in Node < 4.x
+* CB-9782 Implements PlatformApi contract for Android platform.
+* CB-9826 Fixed `test-build` script on windows. 
+* Refactor of the Cordova Plugin/Permissions API
+* Manually updating version to 5.0.0-dev for engine tags
+* Bump up to API level 23
+* Commiting code to handle permissions, and the special case of the Geolocation Plugin
+* CB-9608 cordova-android no longer builds on Node 0.10 or below
+* CB-9080 Cordova CLI run for Android versions 4.1.1 and lower throws error
+* CB-9557 Fixes apk install failure when switching from debug to release build
+* CB-9496 removed permissions added for crosswalk
+* CB-9402 Allow to set gradle distubutionUrl via env variable CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL
+* CB-9428 update script now bumps up minSdkVersion to 14 if it is less than that.
+* CB-9430 Fixes check_reqs failure when javac returns an extra line
+* CB-9172 Improved emulator deploy stability. This closes #188.
+* CB-9404 Fixed an exception when path contained -debug or -release
+* CB-8320 Setting up gradle so we can use CordovaLib as a standard Android Library
+* CB-9185 Fixed an issue when unsigned apks couldn't be found. 
+* CB-9397 Fixes minor issues with `cordova requirements android`
+* CB-9389 Fixes build/check_reqs hang
 
 ### Release 4.1.1 (Aug 2015) ###
 

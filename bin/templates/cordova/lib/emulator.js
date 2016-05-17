@@ -62,13 +62,18 @@ module.exports.list_images = function() {
             var img_obj = {};
             if (response[i].match(/Name:\s/)) {
                 img_obj['name'] = response[i].split('Name: ')[1].replace('\r', '');
+                if (response[i + 1].match(/Device:\s/)) {
+                    i++;
+                    img_obj['device'] = response[i].split('Device: ')[1].replace('\r', '');
+                }
                 if (response[i + 1].match(/Path:\s/)) {
                     i++;
                     img_obj['path'] = response[i].split('Path: ')[1].replace('\r', '');
                 }
-                if (response[i + 1].match(/\(API\slevel\s/)) {
+                if (response[i + 1].match(/\(API\slevel\s/) || (response[i + 2] && response[i + 2].match(/\(API\slevel\s/))) {
                     i++;
-                    img_obj['target'] = response[i].replace('\r', '');
+                    var secondLine = response[i + 1].match(/\(API\slevel\s/) ? response[i + 1] : '';
+                    img_obj['target'] = (response[i] + secondLine).split('Target: ')[1].replace('\r', '');
                 }
                 if (response[i + 1].match(/ABI:\s/)) {
                     i++;
@@ -349,6 +354,7 @@ module.exports.install = function(givenTarget, buildResults) {
             };
 
             events.emit('log', 'Using apk: ' + apk_path);
+            events.emit('log', 'Package name: ' + pkgName);
             events.emit('verbose', 'Installing app on emulator...');
 
             // A special function to call adb install in specific environment w/ specific options.
@@ -363,8 +369,17 @@ module.exports.install = function(givenTarget, buildResults) {
                         if (err) reject(new CordovaError('Error executing "' + command + '": ' + stderr));
                         // adb does not return an error code even if installation fails. Instead it puts a specific
                         // message to stdout, so we have to use RegExp matching to detect installation failure.
-                        else if (/Failure/.test(stdout)) reject(new CordovaError('Failed to install apk to emulator: ' + stdout));
-                        else resolve(stdout);
+                        else if (/Failure/.test(stdout)) {
+                            if (stdout.match(/INSTALL_PARSE_FAILED_NO_CERTIFICATES/)) {
+                                stdout += 'Sign the build using \'-- --keystore\' or \'--buildConfig\'' +
+                                    ' or sign and deploy the unsigned apk manually using Android tools.';
+                            } else if (stdout.match(/INSTALL_FAILED_VERSION_DOWNGRADE/)) {
+                                stdout += 'You\'re trying to install apk with a lower versionCode that is already installed.' +
+                                    '\nEither uninstall an app or increment the versionCode.';
+                            }
+
+                            reject(new CordovaError('Failed to install apk to emulator: ' + stdout));
+                        } else resolve(stdout);
                     });
                 });
             }

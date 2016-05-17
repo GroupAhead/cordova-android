@@ -63,8 +63,17 @@ Adb.install = function (target, packagePath, opts) {
     .then(function(output) {
         // 'adb install' seems to always returns no error, even if installation fails
         // so we catching output to detect installation failure
-        if (output.match(/Failure/))
+        if (output.match(/Failure/)) {
+            if (output.match(/INSTALL_PARSE_FAILED_NO_CERTIFICATES/)) {
+                output += '\n\n' + 'Sign the build using \'-- --keystore\' or \'--buildConfig\'' +
+                    ' or sign and deploy the unsigned apk manually using Android tools.';
+            } else if (output.match(/INSTALL_FAILED_VERSION_DOWNGRADE/)) {
+                output += '\n\n' + 'You\'re trying to install apk with a lower versionCode that is already installed.' +
+                    '\nEither uninstall an app or increment the versionCode.';
+            }
+
             return Q.reject(new CordovaError('Failed to install apk to device: ' + output));
+        }
     });
 };
 

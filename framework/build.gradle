@@ -24,9 +24,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:2.1.2'
     }
 
+}
+
+task showClasspath << {
+    buildscript.configurations.classpath.each { println it.name }
 }
 
 apply plugin: 'android-library'

@@ -160,8 +160,8 @@ Api.prototype.getPlatformInfo = function () {
  * @return  {Promise}  Return a promise either fulfilled, or rejected with
  *   CordovaError instance.
  */
-Api.prototype.prepare = function (cordovaProject) {
-    return require('./lib/prepare').prepare.call(this, cordovaProject);
+Api.prototype.prepare = function (cordovaProject, prepareOptions) {
+    return require('./lib/prepare').prepare.call(this, cordovaProject, prepareOptions);
 };
 
 /**
@@ -226,7 +226,7 @@ Api.prototype.removePlugin = function (plugin, uninstallOptions) {
         .then(function () {
             if (plugin.getFrameworks(this.platform).length === 0) return;
 
-            this.events.emit('verbose', 'Updating build files since android plugin contained <framework>');
+            selfEvents.emit('verbose', 'Updating build files since android plugin contained <framework>');
             require('./lib/builders/builders').getBuilder('gradle').prepBuildFiles();
         }.bind(this))
         // CB-11022 Return truthy value to prevent running prepare after
@@ -328,6 +328,9 @@ Api.prototype.clean = function(cleanOptions) {
     return require('./lib/check_reqs').run()
     .then(function () {
         return require('./lib/build').runClean.call(self, cleanOptions);
+    })
+    .then(function () {
+        return require('./lib/prepare').clean.call(self, cleanOptions);
     });
 };
 

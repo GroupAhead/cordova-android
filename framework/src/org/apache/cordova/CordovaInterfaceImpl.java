@@ -19,7 +19,7 @@
 
 package org.apache.cordova;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
  */
 public class CordovaInterfaceImpl implements CordovaInterface {
     private static final String TAG = "CordovaInterfaceImpl";
-    protected Activity activity;
+    protected AppCompatActivity activity;
     protected ExecutorService threadPool;
     protected PluginManager pluginManager;
 
@@ -50,11 +50,11 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     protected boolean activityWasDestroyed = false;
     protected Bundle savedPluginState;
 
-    public CordovaInterfaceImpl(Activity activity) {
+    public CordovaInterfaceImpl(AppCompatActivity activity) {
         this(activity, Executors.newCachedThreadPool());
     }
 
-    public CordovaInterfaceImpl(Activity activity, ExecutorService threadPool) {
+    public CordovaInterfaceImpl(AppCompatActivity activity, ExecutorService threadPool) {
         this.activity = activity;
         this.threadPool = threadPool;
         this.permissionResultCallbacks = new CallbackMap();
@@ -75,13 +75,13 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     public void setActivityResultCallback(CordovaPlugin plugin) {
         // Cancel any previously pending activity.
         if (activityResultCallback != null) {
-            activityResultCallback.onActivityResult(activityResultRequestCode, Activity.RESULT_CANCELED, null);
+            activityResultCallback.onActivityResult(activityResultRequestCode, AppCompatActivity.RESULT_CANCELED, null);
         }
         activityResultCallback = plugin;
     }
 
     @Override
-    public Activity getActivity() {
+    public AppCompatActivity getActivity() {
         return activity;
     }
 

@@ -51,6 +51,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_6
     }
 
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "3g"
+        incremental true
+        dexInProcess = true
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

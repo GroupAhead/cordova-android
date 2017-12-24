@@ -18,6 +18,8 @@
 */
 package org.apache.cordova;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
@@ -51,10 +53,18 @@ public interface CordovaInterface {
     /**
      * Get the Android activity.
      *
+     * If a custom engine lives outside of the Activity's lifecycle the return value may be null.
+     *
      * @return the Activity
      */
     public abstract AppCompatActivity getActivity();
-    
+
+    /**
+     * Get the Android context.
+     *
+     * @return the Context
+     */
+    public Context getContext();
 
     /**
      * Called when a message is sent to plugin.
@@ -64,7 +74,7 @@ public interface CordovaInterface {
      * @return              Object or null
      */
     public Object onMessage(String id, Object data);
-    
+
     /**
      * Returns a shared thread pool that can be used for background tasks.
      */

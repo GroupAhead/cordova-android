@@ -321,6 +321,7 @@ public class CordovaActivity extends AppCompatActivity {
     /**
      * Called when view focus is changed
      */
+    @SuppressLint("InlinedApi")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

@@ -31,8 +31,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        // The gradle plugin and the maven plugin have to be updated after each version of Android
+        // studio comes out
+        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
@@ -42,7 +44,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'org.apache.cordova'
-version = '7.1.0-dev'
+version = '7.2.0-dev'
 
 android {
     compileSdkVersion cdvCompileSdkVersion
@@ -129,9 +131,9 @@ bintray {
         licenses = ['Apache-2.0']
         labels = ['android', 'cordova', 'phonegap']
         version {
-            name = '7.1.0-dev'
+            name = '7.2.0-dev'
             released  = new Date()
-            vcsTag = '7.1.0-dev'
+            vcsTag = '7.2.0-dev'
         }
     }
 }
